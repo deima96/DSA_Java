@@ -17,9 +17,7 @@ public class LinearProbing {
             int sum=0;
             for(int i=0;i<ch.length;i++){
                 sum+=ch[i];
-                System.out.println(sum);
             }
-
             return sum%index;
         }
         public double getLoadFactor(){
@@ -29,17 +27,17 @@ public class LinearProbing {
         public void rehashKeys(String word){
             usedCellNumber=0;
             ArrayList<String> data = new ArrayList<>();
-            for(String s:hashtable){
-                if(s!=null){
+            for(String s:hashtable) {
+                if (s != null) {
                     data.add(s);
                 }
+            }
                 data.add(word);
                 hashtable = new String[hashtable.length*2];
-                for(String s:data){
+                for(String str:data) {
                     //Insert function
-                    insert(s);
+                    insert(str);
                 }
-            }
         }
 
         public void insert(String word){
@@ -49,12 +47,13 @@ public class LinearProbing {
             }
             else{
                 int index=modASCIIHashFunction(word,hashtable.length);
+                System.out.println("index: "+index);
                 //Here we used i<index+hashtable.length so when i>hashtable.length
                 for(int i=index;i<index+hashtable.length;i++){
                     int newIndex = i % hashtable.length; //it will calculate a new_index here to go to the starting position if those cells are not filled
                     if(hashtable[newIndex] == null){
                         hashtable[newIndex] = word;
-                        System.out.println("The " + word+" is inserted successfully.");
+                        System.out.println("The " + word+" is inserted successfully at location " + newIndex);
                         break;
                     }else{
                         System.out.println("The cell is already occupied, trying to find the new_cell");
@@ -64,12 +63,12 @@ public class LinearProbing {
 
         }
         public void displayHashTable(){
-            if(hashTable==null){
+            if(hashtable==null){
                 System.out.println("HashTable is empty");
                 return;
             }
-            for(int i=0;i<hashTable.length;i++){
-                System.out.println("Index: " + i + "Key: " + hashTable[i]);
+            for(int i=0;i<hashtable.length;i++){
+                System.out.println("Index: " + i + "Key: " + hashtable[i]);
             }
         }
 
@@ -97,6 +96,15 @@ public class LinearProbing {
                 }
             }
             System.out.println("The " + word + " doesn't exist in this hashtable");
+        }
+
+        public static void main(String[] args){
+            LinearProbing lp = new LinearProbing(8);
+            lp.insert("The");
+            lp.insert("quick");
+            lp.insert("brown");
+            lp.insert("fox");
+            lp.insert("over");
         }
 
 
